@@ -45,18 +45,6 @@ public class Player {
         }
     }
 
-    // public void setSymbol(String symbol) {
-    //     if (symbol.length() > 1) {
-    //         System.out.println("Le symbole doit être un seul caractère");
-    //         return;
-    //     } else if (symbol.length() == 0) {
-    //         System.out.println("Le symbole ne peut pas être vide");
-    //         return;
-    //     }
-    //     this.symbol = symbol;
-    // }
-
-
     public void setSymbol(String symbol) throws ParseException {
         if (symbol.length() == 1 && symbol.length() != 0) {
             this.symbol = symbol;
