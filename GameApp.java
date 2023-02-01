@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
+
 public class GameApp {
     /**
      * Attribute scan: Scanner to read user input.
      */
     private static Scanner scan = new Scanner(System.in);
-
     /**
      * Display the main menu.
      */
@@ -34,7 +36,10 @@ public class GameApp {
                     System.out.println("Jouer VS IA PlayVsIa()");
                 }
                 case "3" -> {
-                    System.out.println("Affichage du TOP 10 ShowTop10()");
+                    System.out.println("Affichage du TOP 10");
+                    //call the topgame class here
+                    topgame.main();
+
                 }
                 case "q" -> {
                     System.out.println("Fermeture de l'application ...");
