@@ -28,7 +28,7 @@ public class App {
         menus.add("2 - Jouer à 2");
         menus.add("3 - Afficher le top 10");
         menus.add("q - Quitter");
-        menus.add("Veuillez entrer un choix");
+        menus.add("- Veuillez entrer un choix");
         for (String menu : menus) {
             System.out.println(menu);
         }
@@ -45,7 +45,7 @@ public class App {
         menus.add("6 - PURPLE");
         menus.add("7 - CYAN");
         menus.add("8 - WHITE");
-        menus.add("Veuillez entrer un choix");
+        menus.add("- Veuillez entrer un choix");
         for (String menu : menus) {
             System.out.println(menu);
         }
@@ -53,28 +53,37 @@ public class App {
 
     public static Player createPlayer() {
         Player newPlayer = new Player();
+
+        // Select player name
+        System.out.println("\n");
         while (true) {
-            System.out.println("Entrez votre nom : ");
+            System.out.println("- Entrez votre nom : ");
             try {
                 String name = scan.nextLine();
                 newPlayer.setName(name);
                 break;
             } catch (Exception e) {
-                System.out.println("Veuillez entrer un nom valide (non vide)");
+                System.out.println("/!\\ Veuillez entrer un nom valide (non vide)\n");
             }
         }
+
+        // Select player symbol
+        System.out.println("\n");
         while (true) {
-            System.out.println("Entrez votre symbole : ");
+            System.out.println("- Entrez votre symbole : ");
             try {
                 String symbol = scan.nextLine();
                 newPlayer.setSymbol(symbol);
                 break;
             } catch (Exception e) {
-                System.out.println("Veuillez entrer un symbole valide (1 caractère et non vide)");
+                System.out.println("/!\\ Veuillez entrer un symbole valide (1 caractère et non vide)\n");
             }
         }
+        System.out.println("\n");
+
+        // Select player symbol color
         while (true) {
-            System.out.println("Choississez votre couleur : ");
+            System.out.println("- Choississez votre couleur : ");
             showColorMenu();
 
             String choice = scan.nextLine();
@@ -112,16 +121,19 @@ public class App {
                     break;
                 }
                 default -> {
-                    System.out.println("Veuillez entrer un nombre entre 1 et 8, correspondant aux couleurs disponibles");
+                    System.out.println("/!\\ Veuillez entrer un nombre entre 1 et 8, correspondant aux couleurs disponibles\n");
                     continue;
                 }
             }
             break;
         }
+        System.out.println("\n\n----> Joueur créé : " + newPlayer.getNom() + " !\n\n");
         return newPlayer;
     }
 
     public static void main(String[] args) throws Exception {
+        Player Player1;
+        Player Player2;
         while (true) {
             try {
                 showMenu();
@@ -129,11 +141,12 @@ public class App {
                 switch (choice) {
                     case "1" -> {
                         System.out.println("Player vs Player PlayVsPlayer()");
-                        Player NouveauJoueur = createPlayer();
-                        System.out.println("Nom : " + NouveauJoueur.getNom());
-                        System.out.println("Symbole : " + NouveauJoueur.getSymbol());
-                        System.out.println("Couleur : ");
-                        System.out.println(NouveauJoueur.getSymbolColor() + "Couleur" + RESET);
+                        System.out.println("Création du joueur 1");
+                        Player1 = createPlayer();
+                        System.out.println("Création du joueur 2");
+                        Player2 = createPlayer();
+                        System.out.println(Player1);
+                        System.out.println(Player2);
                         return;
                     }
                     case "2" -> {
@@ -143,13 +156,13 @@ public class App {
                         System.out.println("Affichage du TOP 10 ShowTop10()");
                     }
                     case "q" -> {
-                        System.out.println("Fermeture de l'application ...");
+                        System.out.println("----> Fermeture de l'application ...");
                         return;
                     }
-                    default -> System.out.println("Veuillez choisir une option valable");
+                    default -> System.out.println("/!\\ Veuillez choisir une option valable\n");
                 }
             } catch (Exception e) {
-                System.out.println("Veuillez choisir une option valable");
+                System.out.println("/!\\ Veuillez choisir une option valable\n");
             }
 
         }
