@@ -3,11 +3,11 @@ import java.text.ParseException;
 
 public class Player {
     private String name;
-    private String symbol;
+    private char symbol;
     private String symbolColor;
     private int score;
 
-    public Player(String nom, String symbol, String symbolColor, int score) {
+    public Player(String nom, char symbol, String symbolColor, int score) {
         this.name = nom;
         this.symbol = symbol;
         this.symbolColor = symbolColor;
@@ -21,7 +21,7 @@ public class Player {
         return this.name;
     }
 
-    public String getSymbol() {
+    public char getSymbol() {
         return this.symbol;
     }
 
@@ -45,8 +45,8 @@ public class Player {
         }
     }
 
-    public void setSymbol(String symbol) throws ParseException {
-        if (symbol.length() == 1 && symbol.length() != 0) {
+    public void setSymbol(char symbol) throws ParseException {
+        if (symbol != ' ' && symbol != '\t' && symbol != '\n' && symbol != '\r' && symbol != '\f') {
             this.symbol = symbol;
         } else {
             throw new ParseException("Format symbole invalide (non vide et 1 seul caractère)", 0);
