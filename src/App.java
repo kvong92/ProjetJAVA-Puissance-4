@@ -1,13 +1,11 @@
 package src;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
+
+import model.Player;
+
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.List;
-import model.Player;
-import model.Game;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
     /** Attribute scan: Scanner to read user input. **/
@@ -155,7 +153,7 @@ public class App {
         return newPlayer;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static Player main(String[] args) throws Exception {
         Player Player1;
         Player Player2;
         while (true) {
@@ -164,23 +162,31 @@ public class App {
                 String choice = scan.nextLine();
                 switch (choice) {
                     case "1" -> {
+                        System.out.println("PVE");
+                        System.out.println("Création du joueur ...\n");
+                        Player1 = createPlayer();
+                        System.out.println("----> Création de la partie ...\n");
+                        //gameGenerator
+                    }
+                    case "2" -> {
                         System.out.println("PVP");
                         System.out.println("Création du joueur 1 ...\n");
                         Player1 = createPlayer();
                         System.out.println("Création du joueur 2 ...\n");
                         Player2 = createPlayer();
                         System.out.println("----> Création de la partie ...\n");
-                        return;
-                    }
-                    case "2" -> {
-                        System.out.println("PVE");
+                        //gameGenerator
+
+                        return Player1;
+
                     }
                     case "3" -> {
-                        System.out.println("Affichage du TOP 10 ShowTop10()");
+                        System.out.println("Affichage du TOP 10");
+                        //showTop10();
                     }
                     case "q" -> {
                         System.out.println("----> Fermeture de l'application ...");
-                        return;
+                        break;
                     }
                     default -> System.out.println("/!\\ Veuillez choisir une option valable\n");
                 }
