@@ -1,8 +1,8 @@
 package model;
 
-import java.io.*;
+// import java.io.*;
 import java.text.ParseException;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Player {
@@ -12,7 +12,8 @@ public class Player {
     private int score;
     private static final String SEPARATOR = ";";
     // private static final Pattern CSV_PATTERN = Pattern.compile(SEPARATOR);
-    private static final String inputPattern = "^(?:(?<=^)[^\s" + SEPARATOR + "]|^\s;)(?:[^" + SEPARATOR + "]*[^\s;])?$";
+    private static final String inputPattern = "^(?:(?<=^)[^\s" + SEPARATOR + "]|^\s;)(?:[^" + SEPARATOR
+            + "]*[^\s;])?$";
 
     public static boolean patternMatches(String input, String pattern) {
         return Pattern.compile(pattern).matcher(input).matches();
@@ -54,7 +55,7 @@ public class Player {
     }
 
     public void setSymbol(char symbol) throws ParseException {
-        if (symbol != ' ' && symbol != '\t' && symbol != '\n' && symbol != '\r' && symbol != '\f') {
+        if (patternMatches(name, inputPattern)) {
             this.symbol = symbol;
         } else {
             throw new ParseException("Format symbole invalide (non vide et 1 seul caractère)", 0);
@@ -65,18 +66,18 @@ public class Player {
         this.symbolColor = symbolColor;
     }
 
-    public static void savePlayerInfo(Player newPlayer) {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(newPlayer);
-      
-        String separator = SEPARATOR;
-        try (FileWriter writer = new FileWriter("players.csv")) {
-          for (Player player : players) {
-            writer.append(player.getName()).append(separator)
-                  .append(Character.toString(player.getSymbol())).append("\n");
-          }
-        } catch (IOException e) {
-          System.out.println("Erreur lors de l'écriture du fichier: " + e.getMessage());
-        }
-      }
+    // public static void savePlayerInfo(Player newPlayer) {
+    // ArrayList<Player> players = new ArrayList<>();
+    // players.add(newPlayer);
+
+    // String separator = SEPARATOR;
+    // try (FileWriter writer = new FileWriter("players.csv")) {
+    // for (Player player : players) {
+    // writer.append(player.getName()).append(separator)
+    // .append(Character.toString(player.getSymbol())).append("\n");
+    // }
+    // } catch (IOException e) {
+    // System.out.println("Erreur lors de l'écriture");
+    // }
+    // }
 }

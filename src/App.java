@@ -1,11 +1,12 @@
 package src;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
+// import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.List;
+// import java.text.ParseException;
+// import java.util.List;
 import model.Player;
 import model.Game;
 
@@ -24,7 +25,6 @@ public class App {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
-
 
     /** Display the main menu. **/
     public static void showMenu() {
@@ -58,7 +58,7 @@ public class App {
     }
 
     public static void Game(Player player1, Player player2) {
-    
+
     }
 
     public static Player createPlayer() {
@@ -145,7 +145,8 @@ public class App {
                     break;
                 }
                 default -> {
-                    System.out.println("/!\\ Veuillez entrer un nombre entre 1 et 8, correspondant aux couleurs disponibles\n");
+                    System.out.println(
+                            "/!\\ Veuillez entrer un nombre entre 1 et 8, correspondant aux couleurs disponibles\n");
                     continue;
                 }
             }
@@ -156,37 +157,41 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        Player Player1;
-        Player Player2;
+        Player player1;
+        Player player2;
         while (true) {
-            try {
-                showMenu();
-                String choice = scan.nextLine();
-                switch (choice) {
-                    case "1" -> {
-                        System.out.println("PVP");
-                        System.out.println("Création du joueur 1 ...\n");
-                        Player1 = createPlayer();
-                        System.out.println("Création du joueur 2 ...\n");
-                        Player2 = createPlayer();
-                        System.out.println("----> Création de la partie ...\n");
-                        return;
-                    }
-                    case "2" -> {
-                        System.out.println("PVE");
-                    }
-                    case "3" -> {
-                        System.out.println("Affichage du TOP 10 ShowTop10()");
-                    }
-                    case "q" -> {
-                        System.out.println("----> Fermeture de l'application ...");
-                        return;
-                    }
-                    default -> System.out.println("/!\\ Veuillez choisir une option valable\n");
+            // try {
+            showMenu();
+            String choice = scan.nextLine();
+            switch (choice) {
+                case "1" -> {
+                    System.out.println("PVP");
+                    System.out.println("Création du joueur 1 ...\n");
+                    player1 = createPlayer();
+                    System.out.println("Création du joueur 2 ...\n");
+                    player2 = createPlayer();
+                    System.out.println("----> Création de la partie ...\n");
+                    Game newGame = new Game();
+                    newGame.startGame(player1, player2);
+                    return;
                 }
-            } catch (Exception e) {
-                System.out.println("/!\\ Veuillez choisir une option valable\n");
+                case "2" -> {
+                    System.out.println("PVE");
+                }
+                case "3" -> {
+                    System.out.println("Affichage du TOP 10 ShowTop10()");
+                }
+                case "q" -> {
+                    System.out.println("----> Fermeture de l'application ...");
+                    return;
+                }
+                default -> System.out.println("/!\\ Veuillez choisir une option valable (default)\n");
             }
+            // }
+            // catch (Exception e) {
+            // System.out.println("/!\\ Veuillez choisir une option valable (menu failed)\n
+            // fdp " + e);
+            // }
         }
     }
 }
