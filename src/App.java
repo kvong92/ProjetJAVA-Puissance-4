@@ -2,12 +2,15 @@ package src;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
 import model.Player;
 import model.Game;
 
 public class App {
     /** Attribute scan: Scanner to read user input. **/
-
     private static Scanner scan = new Scanner(System.in);
 
     /** Color **/
@@ -60,10 +63,19 @@ public class App {
 
     public static Player createPlayer() {
 
-        Player newPlayer = new Player();
+        String fileName = "players.csv";
+        File file = new File(fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("An error occurred while creating file: " + e.getMessage());
+            }
+        }
+
+        Player newPlayer = new Player(" ", ' ', " ", 0);
 
         // Select player name
-        System.out.println("\n");
         while (true) {
             System.out.println("- Entrez votre nom : ");
             try {
@@ -86,8 +98,9 @@ public class App {
                     newPlayer.setSymbol(symbol);
                     break;
                 }
-            } catch (Exception e) {
                 System.out.println("/!\\ Veuillez entrer un symbole valide (1 caractère et non vide)\n");
+            } catch (Exception e) {
+                System.out.println("/!\\ Erreur lors de la saisi de votre symbole !\n");
             }
         }
         System.out.println("\n");
@@ -138,7 +151,7 @@ public class App {
             }
             break;
         }
-        System.out.println("\n\n----> Joueur créé : " + newPlayer.getNom() + " !\n\n");
+        System.out.println("\n\n----> Joueur créé : " + newPlayer.getName() + " !\n\n");
         return newPlayer;
     }
 
