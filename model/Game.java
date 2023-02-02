@@ -115,7 +115,7 @@ public class Game {
         int column = 0;
         System.out.println(player.getName() + ", veuillez choisir colonne entre 1 et 7 :");
         column = scan.nextInt();
-        if (column >= 0 && column <= 6) {
+        if (column >= 0 && column <= 7) {
           column = column - 1;
           if (checkColumnFull(board, column) == false) {
             board = updateBoard(board, column, player);
