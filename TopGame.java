@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class topgame {
+public class TopGame {
 
     public static void main() throws IOException {
         //create a .csv file that can store the top 10 players who won with the least number of moves and output the top 10 players with the move count
