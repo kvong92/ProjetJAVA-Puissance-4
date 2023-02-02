@@ -1,7 +1,9 @@
 package src;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import model.Player;
+import model.Game;
 
 public class App {
     /** Attribute scan: Scanner to read user input. **/
@@ -19,6 +21,7 @@ public class App {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
+
 
     /** Display the main menu. **/
     public static void showMenu() {
@@ -51,7 +54,12 @@ public class App {
         }
     }
 
+    public static void Game(Player player1, Player player2) {
+    
+    }
+
     public static Player createPlayer() {
+
         Player newPlayer = new Player();
 
         // Select player name
@@ -72,9 +80,12 @@ public class App {
         while (true) {
             System.out.println("- Entrez votre symbole : ");
             try {
-                String symbol = scan.nextLine();
-                newPlayer.setSymbol(symbol);
-                break;
+                String symbolInput = scan.nextLine();
+                if (symbolInput.length() == 1) {
+                    char symbol = symbolInput.charAt(0);
+                    newPlayer.setSymbol(symbol);
+                    break;
+                }
             } catch (Exception e) {
                 System.out.println("/!\\ Veuillez entrer un symbole valide (1 caractère et non vide)\n");
             }
@@ -140,17 +151,16 @@ public class App {
                 String choice = scan.nextLine();
                 switch (choice) {
                     case "1" -> {
-                        System.out.println("Player vs Player PlayVsPlayer()");
-                        System.out.println("Création du joueur 1");
+                        System.out.println("PVP");
+                        System.out.println("Création du joueur 1 ...\n");
                         Player1 = createPlayer();
-                        System.out.println("Création du joueur 2");
+                        System.out.println("Création du joueur 2 ...\n");
                         Player2 = createPlayer();
-                        System.out.println(Player1);
-                        System.out.println(Player2);
+                        System.out.println("----> Création de la partie ...\n");
                         return;
                     }
                     case "2" -> {
-                        System.out.println("Jouer VS IA PlayVsIa()");
+                        System.out.println("PVE");
                     }
                     case "3" -> {
                         System.out.println("Affichage du TOP 10 ShowTop10()");
@@ -164,7 +174,6 @@ public class App {
             } catch (Exception e) {
                 System.out.println("/!\\ Veuillez choisir une option valable\n");
             }
-
         }
     }
 }
