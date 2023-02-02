@@ -1,23 +1,31 @@
 package model;
+
+import java.io.*;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Player {
     private String name;
     private char symbol;
     private String symbolColor;
     private int score;
+    private static final String SEPARATOR = ";";
+    // private static final Pattern CSV_PATTERN = Pattern.compile(SEPARATOR);
+    private static final String inputPattern = "^(?:(?<=^)[^\s" + SEPARATOR + "]|^\s;)(?:[^" + SEPARATOR + "]*[^\s;])?$";
 
-    public Player(String nom, char symbol, String symbolColor, int score) {
-        this.name = nom;
+    public static boolean patternMatches(String input, String pattern) {
+        return Pattern.compile(pattern).matcher(input).matches();
+    }
+
+    public Player(String name, char symbol, String symbolColor, int score) {
+        this.name = name;
         this.symbol = symbol;
         this.symbolColor = symbolColor;
         this.score = score;
     }
 
-    public Player() {
-    }
-
-    public String getNom() {
+    public String getName() {
         return this.name;
     }
 
@@ -38,7 +46,7 @@ public class Player {
     }
 
     public void setName(String name) throws ParseException {
-        if (name.length() != 0) {
+        if (patternMatches(name, inputPattern)) {
             this.name = name;
         } else {
             throw new ParseException("Format nom invalide", 0);
@@ -56,4 +64,19 @@ public class Player {
     public void setSymbolColor(String symbolColor) {
         this.symbolColor = symbolColor;
     }
+
+    public static void savePlayerInfo(Player newPlayer) {
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(newPlayer);
+      
+        String separator = SEPARATOR;
+        try (FileWriter writer = new FileWriter("players.csv")) {
+          for (Player player : players) {
+            writer.append(player.getName()).append(separator)
+                  .append(Character.toString(player.getSymbol())).append("\n");
+          }
+        } catch (IOException e) {
+          System.out.println("Erreur lors de l'écriture du fichier: " + e.getMessage());
+        }
+      }
 }
