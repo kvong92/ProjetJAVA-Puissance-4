@@ -9,7 +9,7 @@ public class Game {
 
   private static Scanner scan = new Scanner(System.in);
   public static final String RESET = "\u001B[0m";
-  public static final String RED_BOLD_BRIGHT = "\033[1;91m";   // RED
+  public static final String RED_BOLD_BRIGHT = "\033[1;91m"; // RED
   public static final String GREEN_BOLD_BRIGHT = "\033[1;92m"; // GREEN
 
   public static List<List<String>> initBoard() {
@@ -60,10 +60,6 @@ public class Game {
   public static void setWinColor(List<List<String>> board, int j, int i, String symbol, Player player) {
     symbol = RED_BOLD_BRIGHT + player.getSymbol() + RESET;
     board.get(j).set(i, symbol);
-    board.get(j + 1).set(i, symbol);
-    board.get(j + 2).set(i, symbol);
-    board.get(j + 3).set(i, symbol);
-    displayBoard(board);
   }
 
   public static boolean checkWin(List<List<String>> board, String symbol, Player player) {
@@ -74,8 +70,12 @@ public class Game {
             && board.get(j + 1).get(i).equals(symbol)
             && board.get(j + 2).get(i).equals(symbol)
             && board.get(j + 3).get(i).equals(symbol)) {
-              System.out.println(GREEN_BOLD_BRIGHT + "\n   La Partie est terminée !\n" + RESET);
+          System.out.println(GREEN_BOLD_BRIGHT + "\n   La Partie est terminée !\n" + RESET);
           setWinColor(board, j, i, symbol, player);
+          setWinColor(board, j + 1, i, symbol, player);
+          setWinColor(board, j + 2, i, symbol, player);
+          setWinColor(board, j + 3, i, symbol, player);
+          displayBoard(board);
           return (true);
         }
       }
@@ -87,6 +87,12 @@ public class Game {
             && board.get(i).get(j + 1).equals(symbol)
             && board.get(i).get(j + 2).equals(symbol)
             && board.get(i).get(j + 3).equals(symbol)) {
+          System.out.println(GREEN_BOLD_BRIGHT + "\n   La Partie est terminée !\n" + RESET);
+          setWinColor(board, i, j + 1, symbol, player);
+          setWinColor(board, i, j + 2, symbol, player);
+          setWinColor(board, i, j + 3, symbol, player);
+          setWinColor(board, i, j, symbol, player);
+          displayBoard(board);
           return (true);
         }
       }
@@ -98,6 +104,12 @@ public class Game {
             && board.get(i + 1).get(j + 1).equals(symbol)
             && board.get(i + 2).get(j + 2).equals(symbol)
             && board.get(i + 3).get(j + 3).equals(symbol)) {
+          System.out.println(GREEN_BOLD_BRIGHT + "\n   La Partie est terminée !\n" + RESET);
+          setWinColor(board, i, j, symbol, player);
+          setWinColor(board, i + 1, j + 1, symbol, player);
+          setWinColor(board, i + 2, j + 2, symbol, player);
+          setWinColor(board, i + 3, j + 3, symbol, player);
+          displayBoard(board);
           return (true);
         }
       }
@@ -109,6 +121,12 @@ public class Game {
             && board.get(i + 1).get(j - 1).equals(symbol)
             && board.get(i + 2).get(j - 2).equals(symbol)
             && board.get(i + 3).get(j - 3).equals(symbol)) {
+          System.out.println(GREEN_BOLD_BRIGHT + "\n   La Partie est terminée !\n" + RESET);
+          setWinColor(board, i, j, symbol, player);
+          setWinColor(board, i + 1, j - 1, symbol, player);
+          setWinColor(board, i + 2, j - 2, symbol, player);
+          setWinColor(board, i + 3, j - 3, symbol, player);
+          displayBoard(board);
           return (true);
         }
       }
@@ -151,18 +169,21 @@ public class Game {
     }
   }
 
-  public void startGame(Player player1, Player player2) {
+  public void startGame(Player player1, Player player2, String gameMode) {
     List<List<String>> board = initBoard();
     displayBoard(board);
     int turn = 0;
     while (true) {
-      // int column = 0;
       if (checkWin(board, player1.getSymbolColor() + player1.getSymbol() + RESET, player1)) {
-        System.out.println(GREEN_BOLD_BRIGHT + "\n     Joueur : " + player1.getName() + " a gagné !\n" + RESET);
+        System.out.println(
+            GREEN_BOLD_BRIGHT + "\nJoueur : " + player1.getName() + " a gagné en " + turn + " tours !\n" + RESET);
+        player1.setScore(turn);
         break;
       } else {
         if (checkWin(board, player2.getSymbolColor() + player2.getSymbol() + RESET, player2)) {
-          System.out.println(GREEN_BOLD_BRIGHT + "\n     Joueur : " + player2.getName() + " a gagné !\n" + RESET);
+          System.out.println(
+              GREEN_BOLD_BRIGHT + "\nJoueur : " + player2.getName() + " a gagné en " + turn + " tours !\n" + RESET);
+          player2.setScore(turn);
           break;
         }
       }
@@ -179,9 +200,4 @@ public class Game {
       turn++;
     }
   }
-
-  // public static void main(String[] args) {
-  // List<List<String>> board = initBoard();
-  // displayBoard(board);
-  // }
 }
