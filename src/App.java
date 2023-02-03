@@ -30,8 +30,8 @@ public class App {
     public static void showMenu() {
         ArrayList<String> menus = new ArrayList<>();
         menus.add("|--------- Menu ---------|");
-        menus.add("1 - Jouer contre l'IA");
-        menus.add("2 - Jouer à 2");
+        menus.add("1 - Joueur contre Joueur");
+        menus.add("2 - Jouer contre l'IA");
         menus.add("3 - Afficher le top 10");
         menus.add("q - Quitter");
         menus.add("- Veuillez entrer un choix");
@@ -55,10 +55,6 @@ public class App {
         for (String menu : menus) {
             System.out.println(menu);
         }
-    }
-
-    public static void Game(Player player1, Player player2) {
-
     }
 
     public static Player createPlayer() {
