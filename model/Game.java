@@ -8,7 +8,9 @@ import java.util.Scanner;
 public class Game {
 
   private static Scanner scan = new Scanner(System.in);
-  private static String RESET = "\u001B[0m";
+  public static final String RESET = "\u001B[0m";
+  public static final String RED_BOLD_BRIGHT = "\033[1;91m";   // RED
+  public static final String GREEN_BOLD_BRIGHT = "\033[1;92m"; // GREEN
 
   public static List<List<String>> initBoard() {
     List<List<String>> board = new ArrayList<>(7);
@@ -55,41 +57,58 @@ public class Game {
     return (true);
   }
 
-  public static boolean checkWin(List<List<String>> board, String symbol) {
-    // Check horizontal
+  public static void setWinColor(List<List<String>> board, int j, int i, String symbol, Player player) {
+    symbol = RED_BOLD_BRIGHT + player.getSymbol() + RESET;
+    board.get(j).set(i, symbol);
+    board.get(j + 1).set(i, symbol);
+    board.get(j + 2).set(i, symbol);
+    board.get(j + 3).set(i, symbol);
+    displayBoard(board);
+  }
+
+  public static boolean checkWin(List<List<String>> board, String symbol, Player player) {
+    // Check horizontal : --
     for (int i = 0; i < 6; i++) {
       for (int j = 0; j < 4; j++) {
-        if (board.get(j).get(i).equals(symbol) && board.get(j + 1).get(i).equals(symbol)
+        if (board.get(j).get(i).equals(symbol)
+            && board.get(j + 1).get(i).equals(symbol)
             && board.get(j + 2).get(i).equals(symbol)
             && board.get(j + 3).get(i).equals(symbol)) {
+              System.out.println(GREEN_BOLD_BRIGHT + "\n   La Partie est terminée !\n" + RESET);
+          setWinColor(board, j, i, symbol, player);
           return (true);
         }
       }
     }
-    // Check vertical
+    // Check vertical : |
     for (int i = 0; i < 7; i++) {
       for (int j = 0; j < 3; j++) {
-        if (board.get(i).get(j).equals(symbol) && board.get(i).get(j + 1).equals(symbol)
+        if (board.get(i).get(j).equals(symbol)
+            && board.get(i).get(j + 1).equals(symbol)
             && board.get(i).get(j + 2).equals(symbol)
             && board.get(i).get(j + 3).equals(symbol)) {
           return (true);
         }
       }
     }
-    // Check diagonal
+    // Check diagonal : \
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 3; j++) {
-        if (board.get(i).get(j).equals(symbol) && board.get(i + 1).get(j + 1).equals(symbol)
-            && board.get(i + 2).get(j + 2).equals(symbol) && board.get(i + 3).get(j + 3).equals(symbol)) {
+        if (board.get(i).get(j).equals(symbol)
+            && board.get(i + 1).get(j + 1).equals(symbol)
+            && board.get(i + 2).get(j + 2).equals(symbol)
+            && board.get(i + 3).get(j + 3).equals(symbol)) {
           return (true);
         }
       }
     }
-    // Check diagonal
+    // Check diagonal : /
     for (int i = 0; i < 4; i++) {
       for (int j = 5; j > 2; j--) {
-        if (board.get(i).get(j).equals(symbol) && board.get(i + 1).get(j - 1).equals(symbol)
-            && board.get(i + 2).get(j - 2).equals(symbol) && board.get(i + 3).get(j - 3).equals(symbol)) {
+        if (board.get(i).get(j).equals(symbol)
+            && board.get(i + 1).get(j - 1).equals(symbol)
+            && board.get(i + 2).get(j - 2).equals(symbol)
+            && board.get(i + 3).get(j - 3).equals(symbol)) {
           return (true);
         }
       }
@@ -121,12 +140,12 @@ public class Game {
             board = updateBoard(board, column, player);
             break;
           } else {
-            System.out.println("La colonne " + (column + 1) + " est pleine.");
+            System.out.println(RED_BOLD_BRIGHT + "La colonne " + (column + 1) + " est pleine." + RESET);
             throw new InputMismatchException();
           }
         }
       } catch (InputMismatchException e) {
-        System.out.println("Veuillez entrer un nombre entre 1 et 7 : ");
+        System.out.println(RED_BOLD_BRIGHT + "Veuillez entrer un nombre entre 1 et 7 : " + RESET);
         scan.nextLine();
       }
     }
@@ -138,17 +157,17 @@ public class Game {
     int turn = 0;
     while (true) {
       // int column = 0;
-      if (checkWin(board, player1.getSymbolColor() + player1.getSymbol() + RESET)) {
-        System.out.println(player1.getName() + " a gagné !");
+      if (checkWin(board, player1.getSymbolColor() + player1.getSymbol() + RESET, player1)) {
+        System.out.println(GREEN_BOLD_BRIGHT + "\n     Joueur : " + player1.getName() + " a gagné !\n" + RESET);
         break;
       } else {
-        if (checkWin(board, player2.getSymbolColor() + player2.getSymbol() + RESET)) {
-          System.out.println(player2.getName() + " a gagné !");
+        if (checkWin(board, player2.getSymbolColor() + player2.getSymbol() + RESET, player2)) {
+          System.out.println(GREEN_BOLD_BRIGHT + "\n     Joueur : " + player2.getName() + " a gagné !\n" + RESET);
           break;
         }
       }
       if (checkDraw(board)) {
-        System.out.println("Match nul !");
+        System.out.println(GREEN_BOLD_BRIGHT + "       Match nul !" + RESET);
         break;
       }
       if (turn % 2 == 0) {
