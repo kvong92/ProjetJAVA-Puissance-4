@@ -2,6 +2,7 @@ package src;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 // import java.io.File;
 import java.io.IOException;
@@ -55,6 +56,20 @@ public class App {
         for (String menu : menus) {
             System.out.println(menu);
         }
+    }
+
+    /** Create IA PLAYER random symbol/color **/
+    public static Player createPlayerIA() {
+        String charList = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+        Random rand_symbol = new Random();
+        char symbolIA = charList.charAt(rand_symbol.nextInt(charList.length())); // Get random char from charList with rand.nextInt as index from charList's List
+        
+        String[] colorList = {BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE};
+        Random rand_color = new Random();
+        String colorIA = colorList[rand_color.nextInt(colorList.length)]; // Get random color from colorList with rand.nextInt as index from colorList's List
+        
+        Player PlayerIA = new Player("IA", symbolIA, colorIA, 0);
+        return (PlayerIA);
     }
 
     public static Player createPlayer() {
@@ -156,23 +171,31 @@ public class App {
         Player player1;
         Player player2;
         while (true) {
-            // try {
             showMenu();
             String choice = scan.nextLine();
             switch (choice) {
                 case "1" -> {
-                    System.out.println("PVP");
+                    System.out.println("Mode : Joueur contre Joueur");
                     System.out.println("Création du joueur 1 ...\n");
                     player1 = createPlayer();
                     System.out.println("Création du joueur 2 ...\n");
                     player2 = createPlayer();
                     System.out.println("----> Création de la partie ...\n");
                     Game newGame = new Game();
-                    newGame.startGame(player1, player2);
+                    String gameMode = "PVP";
+                    newGame.startGame(player1, player2, gameMode);
                     return;
                 }
                 case "2" -> {
-                    System.out.println("PVE");
+                    System.out.println("Mode : Joueur contre IA");
+                    System.out.println("Création du joueur ...\n");
+                    player1 = createPlayer();
+                    player2 = createPlayerIA();
+                    System.out.println("----> Création de la partie ...\n");
+                    Game newGame = new Game();
+                    String gameMode = "PVE";
+                    newGame.startGame(player1, player2, gameMode);
+                    return;
                 }
                 case "3" -> {
                     System.out.println("Affichage du TOP 10 ShowTop10()");
@@ -183,11 +206,6 @@ public class App {
                 }
                 default -> System.out.println("/!\\ Veuillez choisir une option valable (default)\n");
             }
-            // }
-            // catch (Exception e) {
-            // System.out.println("/!\\ Veuillez choisir une option valable (menu failed)\n
-            // fdp " + e);
-            // }
         }
     }
 }
