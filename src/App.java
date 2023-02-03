@@ -58,16 +58,63 @@ public class App {
         }
     }
 
+    public static void showLevelMenuIA() {
+        ArrayList<String> menus = new ArrayList<>();
+        menus.add("-- Menu niveau IA --");
+        menus.add("1 - Niveau 1");
+        menus.add("2 - Niveau 2");
+        menus.add("3 - Niveau 3");
+        menus.add("4 - Niveau 4");
+        menus.add("- Veuillez entrer un choix");
+        for (String menu : menus) {
+            System.out.println(menu);
+        }
+    }
+
+    public static int selectLevel() {
+        int level = 0;
+        boolean isLevel = false;
+        while (!isLevel) {
+            showLevelMenuIA();
+            String levelIA = scan.nextLine();
+            switch (levelIA) {
+                case "1":
+                    level = 1;
+                    isLevel = true;
+                    break;
+                case "2":
+                    level = 2;
+                    isLevel = true;
+                    break;
+                case "3":
+                    level = 3;
+                    isLevel = true;
+                    break;
+                case "4":
+                    level = 4;
+                    isLevel = true;
+                    break;
+                default:
+                    System.out.println("Veuillez entrer un choix de niveau valide");
+                    break;
+            }
+        }
+        return level;
+    }
+
     /** Create IA PLAYER random symbol/color **/
     public static Player createPlayerIA() {
         String charList = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         Random rand_symbol = new Random();
-        char symbolIA = charList.charAt(rand_symbol.nextInt(charList.length())); // Get random char from charList with rand.nextInt as index from charList's List
-        
-        String[] colorList = {BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE};
+        char symbolIA = charList.charAt(rand_symbol.nextInt(charList.length())); // Get random char from charList with
+                                                                                 // rand.nextInt as index from
+                                                                                 // charList's List
+
+        String[] colorList = { BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE };
         Random rand_color = new Random();
-        String colorIA = colorList[rand_color.nextInt(colorList.length)]; // Get random color from colorList with rand.nextInt as index from colorList's List
-        
+        String colorIA = colorList[rand_color.nextInt(colorList.length)]; // Get random color from colorList with
+                                                                          // rand.nextInt as index from colorList's List
+
         Player PlayerIA = new Player("IA", symbolIA, colorIA, 0);
         return (PlayerIA);
     }
@@ -170,6 +217,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         Player player1;
         Player player2;
+        int level = 0;
+
         while (true) {
             showMenu();
             String choice = scan.nextLine();
@@ -183,7 +232,7 @@ public class App {
                     System.out.println("----> Création de la partie ...\n");
                     Game newGame = new Game();
                     String gameMode = "PVP";
-                    newGame.startGame(player1, player2, gameMode);
+                    newGame.startGame(player1, player2, gameMode, level);
                     return;
                 }
                 case "2" -> {
@@ -191,10 +240,11 @@ public class App {
                     System.out.println("Création du joueur ...\n");
                     player1 = createPlayer();
                     player2 = createPlayerIA();
+                    level = selectLevel();
                     System.out.println("----> Création de la partie ...\n");
                     Game newGame = new Game();
                     String gameMode = "PVE";
-                    newGame.startGame(player1, player2, gameMode);
+                    newGame.startGame(player1, player2, gameMode, level);
                     return;
                 }
                 case "3" -> {
