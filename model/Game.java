@@ -169,7 +169,19 @@ public class Game {
     }
   }
 
-  public void startGame(Player player1, Player player2, String gameMode) {
+  public static void iaTurn(Player player, List<List<String>> board) {
+    System.out.println("C'est au tour de l'IA de jouer ...");
+    int column = 0;
+    while (true) {
+      column = PlayerIA.level1();
+      if (checkColumnFull(board, column) == false) {
+        board = updateBoard(board, column, player);
+        break;
+      }
+    }
+  }
+
+  public void startGame(Player player1, Player player2, String gameMode, int level) {
     List<List<String>> board = initBoard();
     displayBoard(board);
     int turn = 0;
@@ -194,7 +206,11 @@ public class Game {
       if (turn % 2 == 0) {
         playerTurn(player1, board);
       } else {
-        playerTurn(player2, board);
+        if (gameMode.equals("PVE")) {
+          iaTurn(player2, board);
+        } else {
+          playerTurn(player2, board);
+        }
       }
       displayBoard(board);
       turn++;
