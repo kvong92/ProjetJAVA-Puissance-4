@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.Random;
+import model.Player;
 // import model.Game;
 
 public class PlayerIA extends Player {
@@ -19,29 +20,35 @@ public class PlayerIA extends Player {
     }
 
     public static int checkNextWin(List<List<String>> board, String symbol) {
-        int column = -1;
+        int column = 0;
         // Check horizontal : --
         for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (board.get(i).get(j).equals(symbol) && board.get(i).get(j + 1).equals(symbol) &&
-                        board.get(i).get(j + 2).equals(symbol) && board.get(i).get(j + 3).equals(" ")) {
+            for (int j = 0; j < 4; j++) {
+                if (board.get(j).get(i).equals(symbol)
+                        && board.get(j + 1).get(i).equals(symbol)
+                        && board.get(j + 2).get(i).equals(symbol)
+                        && board.get(j + 3).get(i).equals(" ")) {
                     column = j + 3;
-                }
-                if (board.get(i).get(j).equals(symbol) && board.get(i).get(j + 1).equals(" ") &&
-                        board.get(i).get(j + 2).equals(symbol) && board.get(i).get(j + 3).equals(symbol)) {
-                    column = j + 1;
-                }
-                if (board.get(i).get(j).equals(" ") && board.get(i).get(j + 1).equals(symbol) &&
-                        board.get(i).get(j + 2).equals(symbol) && board.get(i).get(j + 3).equals(symbol)) {
-                    column = j;
-                }
-                if (board.get(i).get(j).equals(symbol) && board.get(i).get(j + 1).equals(symbol) &&
-                        board.get(i).get(j + 2).equals(" ") && board.get(i).get(j + 3).equals(symbol)) {
+                } else if (board.get(j).get(i).equals(symbol)
+                        && board.get(j + 1).get(i).equals(symbol)
+                        && board.get(j + 2).get(i).equals(" ")
+                        && board.get(j + 3).get(i).equals(symbol)) {
                     column = j + 2;
+                } else if (board.get(j).get(i).equals(symbol)
+                        && board.get(j + 1).get(i).equals(" ")
+                        && board.get(j + 2).get(i).equals(symbol)
+                        && board.get(j + 3).get(i).equals(symbol)) {
+                    column = j + 1;
+                } else if (board.get(j).get(i).equals(" ")
+                        && board.get(j + 1).get(i).equals(symbol)
+                        && board.get(j + 2).get(i).equals(symbol)
+                        && board.get(j + 3).get(i).equals(symbol)) {
+                    column = j;
                 }
             }
         }
         System.out.println("===========FUNCTION COLUMN = " + column + "============");
+        System.out.println(board);
         return column;
     }
 
@@ -52,13 +59,15 @@ public class PlayerIA extends Player {
         int column = 0;
         String playerSymbol = player.getSymbolColor() + player.getSymbol() + RESET;
 
-        System.out.println("=================LEVEL 2=====================");
-        if (checkNextWin(board, playerSymbol) == -1) {
+        // System.out.println("Player symbol = " + playerSymbol);
+        // System.out.println("=================LEVEL 2=====================");
+        if (checkNextWin(board, playerSymbol) == 0) {
             column = level1();
+            // column = 6;
         } else {
-            System.out.println("============ ELSE ELSE ELSE ============");
+            // System.out.println("============ ELSE ELSE ELSE ============");
             column = checkNextWin(board, playerSymbol);
-            System.out.println("################# ELSE ELSE #### column = " + column);
+            // System.out.println("################# ELSE ELSE #### column = " + column);
         }
         return column;
     }

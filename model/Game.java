@@ -57,6 +57,7 @@ public class Game {
       }
       return (true);
     } catch (IndexOutOfBoundsException e) {
+      System.out.println("column ### ==== " + column);
       System.out.println("La colonne n'existe pas !");
       return (true);
     }
@@ -174,7 +175,7 @@ public class Game {
     }
   }
 
-  public static void iaTurn(Player player, List<List<String>> board, int level) {
+  public static void iaTurn(Player player, Player IAplayer, List<List<String>> board, int level) {
     System.out.println("C'est au tour de l'IA de jouer ...");
     int column = 0;
     while (true) {
@@ -184,7 +185,7 @@ public class Game {
         column = PlayerIA.level2(board, player);
       }
       if (checkColumnFull(board, column) == false) {
-        board = updateBoard(board, column, player);
+        board = updateBoard(board, column, IAplayer);
         break;
       }
     }
@@ -218,7 +219,7 @@ public class Game {
         playerTurn(player1, board);
       } else {
         if (gameMode.equals("PVE")) {
-          iaTurn(player2, board, level);
+          iaTurn(player1, player2, board, level);
         } else {
           playerTurn(player2, board);
         }
