@@ -1,15 +1,11 @@
 package src;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-// import java.io.File;
-import java.io.IOException;
-// import java.text.ParseException;
-// import java.util.List;
 import model.Player;
 import model.Game;
+import model.Scores;
 
 public class App {
     /** Attribute scan: Scanner to read user input. **/
@@ -103,7 +99,17 @@ public class App {
     }
 
     /** Create IA PLAYER random symbol/color **/
-    public static Player createPlayerIA() {
+    public static Player createPlayerIA(int level) {
+        String nameIA = "";
+        if (level == 1)
+            nameIA = "IA Niveau 1";
+        else if (level == 2)
+            nameIA = "IA Niveau 2";
+        else if (level == 3)
+            nameIA = "IA Niveau 3";
+        else if (level == 4)
+            nameIA = "IA Niveau 4";
+
         String charList = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
         Random rand_symbol = new Random();
         char symbolIA = charList.charAt(rand_symbol.nextInt(charList.length())); // Get random char from charList with
@@ -115,23 +121,12 @@ public class App {
         String colorIA = colorList[rand_color.nextInt(colorList.length)]; // Get random color from colorList with
                                                                           // rand.nextInt as index from colorList's List
 
-        Player PlayerIA = new Player("IA", symbolIA, colorIA, 0);
+        Player PlayerIA = new Player(nameIA, symbolIA, colorIA);
         return (PlayerIA);
     }
 
     public static Player createPlayer() {
-
-        String fileName = "players.csv";
-        File file = new File(fileName);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                System.out.println("An error occurred while creating file: " + e.getMessage());
-            }
-        }
-
-        Player newPlayer = new Player(" ", ' ', " ", 0);
+        Player newPlayer = new Player(" ", ' ', " ");
 
         // Select player name
         while (true) {
@@ -239,8 +234,8 @@ public class App {
                     System.out.println("Mode : Joueur contre IA");
                     System.out.println("Création du joueur ...\n");
                     player1 = createPlayer();
-                    player2 = createPlayerIA();
                     level = selectLevel();
+                    player2 = createPlayerIA(level);
                     System.out.println("----> Création de la partie ...\n");
                     Game newGame = new Game();
                     String gameMode = "PVE";
@@ -248,7 +243,7 @@ public class App {
                     return;
                 }
                 case "3" -> {
-                    System.out.println("Affichage du TOP 10 ShowTop10()");
+                    Scores.showTop10();
                 }
                 case "q" -> {
                     System.out.println("----> Fermeture de l'application ...");

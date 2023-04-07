@@ -9,7 +9,6 @@ public class Player {
     private String name;
     private char symbol;
     private String symbolColor;
-    private int score;
     private static final String SEPARATOR = ";";
     // private static final Pattern CSV_PATTERN = Pattern.compile(SEPARATOR);
     private static final String inputPattern = "^(?:(?<=^)[^\s" + SEPARATOR + "]|^\s;)(?:[^" + SEPARATOR
@@ -19,11 +18,10 @@ public class Player {
         return Pattern.compile(pattern).matcher(input).matches();
     }
 
-    public Player(String name, char symbol, String symbolColor, int score) {
+    public Player(String name, char symbol, String symbolColor) {
         this.name = name;
         this.symbol = symbol;
         this.symbolColor = symbolColor;
-        this.score = score;
     }
 
     public String getName() {
@@ -36,14 +34,6 @@ public class Player {
 
     public String getSymbolColor() {
         return this.symbolColor;
-    }
-
-    public int getScore() {
-        return this.score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public void setName(String name) throws ParseException {

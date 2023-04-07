@@ -49,12 +49,17 @@ public class Game {
   }
 
   public static boolean checkColumnFull(List<List<String>> board, int column) {
-    for (int i = 5; i >= 0; i--) {
-      if (board.get(column).get(i) == " ") {
-        return (false);
+    try {
+      for (int i = 5; i >= 0; i--) {
+        if (board.get(column).get(i) == " ") {
+          return (false);
+        }
       }
+      return (true);
+    } catch (IndexOutOfBoundsException e) {
+      System.out.println("La colonne n'existe pas !");
+      return (true);
     }
-    return (true);
   }
 
   public static void setWinColor(List<List<String>> board, int j, int i, String symbol, Player player) {
@@ -169,11 +174,15 @@ public class Game {
     }
   }
 
-  public static void iaTurn(Player player, List<List<String>> board) {
+  public static void iaTurn(Player player, List<List<String>> board, int level) {
     System.out.println("C'est au tour de l'IA de jouer ...");
     int column = 0;
     while (true) {
-      column = PlayerIA.level1();
+      if (level == 1) {
+        column = PlayerIA.level1();
+      } else if (level == 2) {
+        column = PlayerIA.level2(board, player);
+      }
       if (checkColumnFull(board, column) == false) {
         board = updateBoard(board, column, player);
         break;
@@ -187,15 +196,17 @@ public class Game {
     int turn = 0;
     while (true) {
       if (checkWin(board, player1.getSymbolColor() + player1.getSymbol() + RESET, player1)) {
+        turn = turn / 2 + 1;
         System.out.println(
             GREEN_BOLD_BRIGHT + "\nJoueur : " + player1.getName() + " a gagné en " + turn + " tours !\n" + RESET);
-        player1.setScore(turn);
+        Scores.writeScore(player1.getName(), turn);
         break;
       } else {
         if (checkWin(board, player2.getSymbolColor() + player2.getSymbol() + RESET, player2)) {
+          turn = turn / 2 + 1;
           System.out.println(
               GREEN_BOLD_BRIGHT + "\nJoueur : " + player2.getName() + " a gagné en " + turn + " tours !\n" + RESET);
-          player2.setScore(turn);
+          Scores.writeScore(player2.getName(), turn);
           break;
         }
       }
@@ -207,7 +218,7 @@ public class Game {
         playerTurn(player1, board);
       } else {
         if (gameMode.equals("PVE")) {
-          iaTurn(player2, board);
+          iaTurn(player2, board, level);
         } else {
           playerTurn(player2, board);
         }
