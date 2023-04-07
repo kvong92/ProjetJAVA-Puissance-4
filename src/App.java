@@ -31,7 +31,7 @@ public class App {
         menus.add("2 - Jouer contre l'IA");
         menus.add("3 - Afficher le top 10");
         menus.add("q - Quitter");
-        menus.add("- Veuillez entrer un choix");
+        menus.add("== Veuillez entrer un choix ==");
         for (String menu : menus) {
             System.out.println(menu);
         }
@@ -48,7 +48,7 @@ public class App {
         menus.add("6 - PURPLE");
         menus.add("7 - CYAN");
         menus.add("8 - WHITE");
-        menus.add("- Veuillez entrer un choix");
+        menus.add("== Veuillez entrer un choix ==");
         for (String menu : menus) {
             System.out.println(menu);
         }
@@ -61,7 +61,7 @@ public class App {
         menus.add("2 - Niveau 2");
         menus.add("3 - Niveau 3");
         menus.add("4 - Niveau 4");
-        menus.add("- Veuillez entrer un choix");
+        menus.add("== Veuillez entrer un choix ==");
         for (String menu : menus) {
             System.out.println(menu);
         }
@@ -143,7 +143,7 @@ public class App {
         // Select player symbol
         System.out.println("\n");
         while (true) {
-            System.out.println("- Entrez votre symbole : ");
+            System.out.println("== Entrez votre symbole ==");
             try {
                 String symbolInput = scan.nextLine();
                 if (symbolInput.length() == 1) {
@@ -160,7 +160,7 @@ public class App {
 
         // Select player symbol color
         while (true) {
-            System.out.println("- Choississez votre couleur : ");
+            System.out.println("== Choississez votre couleur ==");
             showColorMenu();
 
             String choice = scan.nextLine();
