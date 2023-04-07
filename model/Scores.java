@@ -40,7 +40,7 @@ public class Scores {
                 scores.add(new PlayerScore(playerName, score));
             }
         } catch (IOException e) {
-            System.out.println("Error reading file: " + fileName);
+            System.out.println("Erreur lors de la lecture du fichier : " + fileName);
             e.printStackTrace();
         }
     
@@ -49,10 +49,10 @@ public class Scores {
     
         // Print top 10 scores
         System.out.println("Top 10 Scores:");
-        System.out.println(" Player | Score ");
+        System.out.println(" Player (Score) ");
         for (int i = 0; i < Math.min(scores.size(), 10); i++) {
             PlayerScore score = scores.get(i);
-            System.out.println((i + 1) + ". " + score.getPlayerName() + " | " + score.getScore());
+            System.out.println((i + 1) + ". " + score.getPlayerName() + " (" + score.getScore() + ")");
         }
     }
     
